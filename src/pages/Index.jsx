@@ -1,15 +1,50 @@
-// Complete the Index page component here
-// Use chakra-ui
-import { Button } from "@chakra-ui/react"; // example
-import { FaPlus } from "react-icons/fa"; // example - use react-icons/fa for icons
+import { Box, Flex, Input, Button, Text, Badge, VStack, HStack, Spacer } from '@chakra-ui/react';
+import { useState } from 'react';
+
+const developers = [
+  { id: 1, name: 'Alice Johnson', location: 'New York', technologies: ['React', 'Node.js'] },
+  { id: 2, name: 'Bob Smith', location: 'San Francisco', technologies: ['Angular', 'Python'] },
+  { id: 3, name: 'Carol White', location: 'Toronto', technologies: ['Vue', 'PHP'] }
+];
 
 const Index = () => {
-  // TODO: Create the website here!
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredDevelopers = developers.filter(dev =>
+    dev.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    dev.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    dev.technologies.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
   return (
-    <Button>
-      Hello world! <FaPlus />
-    </Button>
-  ); // example
+    <Box p={5}>
+      <Text fontSize="2xl" fontWeight="bold" mb={4}>Particles Marketplace</Text>
+      <Text mb={4}>Discover top software talent specialized in web technologies.</Text>
+      <Input
+        placeholder="Search by name, location, or technology..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        mb={4}
+      />
+      <VStack align="stretch" spacing={4}>
+        {filteredDevelopers.map(dev => (
+          <Box key={dev.id} p={4} borderWidth="1px" borderRadius="lg">
+            <HStack>
+              <Text fontWeight="bold">{dev.name}</Text>
+              <Spacer />
+              <Text>{dev.location}</Text>
+            </HStack>
+            <HStack spacing={2} mt={2}>
+              {dev.technologies.map(tech => (
+                <Badge key={tech} colorScheme="green">{tech}</Badge>
+              ))}
+            </HStack>
+            <Button colorScheme="blue" mt={3}>Message</Button>
+          </Box>
+        ))}
+      </VStack>
+    </Box>
+  );
 };
 
 export default Index;
