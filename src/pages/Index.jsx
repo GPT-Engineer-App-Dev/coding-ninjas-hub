@@ -1,5 +1,6 @@
 import { Box, Flex, Input, Button, Text, Badge, VStack, HStack, Spacer } from '@chakra-ui/react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const developers = [
   { id: 1, name: 'Alice Johnson', location: 'New York', technologies: ['React', 'Node.js'] },
@@ -28,19 +29,21 @@ const Index = () => {
       />
       <VStack align="stretch" spacing={4}>
         {filteredDevelopers.map(dev => (
-          <Box key={dev.id} p={4} borderWidth="1px" borderRadius="lg">
-            <HStack>
-              <Text fontWeight="bold">{dev.name}</Text>
-              <Spacer />
-              <Text>{dev.location}</Text>
-            </HStack>
-            <HStack spacing={2} mt={2}>
-              {dev.technologies.map(tech => (
-                <Badge key={tech} colorScheme="green">{tech}</Badge>
-              ))}
-            </HStack>
-            <Button colorScheme="blue" mt={3}>Message</Button>
-          </Box>
+          <Link to={`/developer/${dev.id}`} key={dev.id} style={{ textDecoration: 'none' }}>
+            <Box p={4} borderWidth="1px" borderRadius="lg">
+              <HStack>
+                <Text fontWeight="bold">{dev.name}</Text>
+                <Spacer />
+                <Text>{dev.location}</Text>
+              </HStack>
+              <HStack spacing={2} mt={2}>
+                {dev.technologies.map(tech => (
+                  <Badge key={tech} colorScheme="green">{tech}</Badge>
+                ))}
+              </HStack>
+              <Button colorScheme="blue" mt={3}>Message</Button>
+            </Box>
+          </Link>
         ))}
       </VStack>
     </Box>
